@@ -1,10 +1,10 @@
 #pragma once
 
-namespace battleships
+namespace bs
 {
     struct Vector2i
     {
-        double x = 0;
-        double y = 0;
+        int x = 0;
+        int y = 0;
     };
 }
