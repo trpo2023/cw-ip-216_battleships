@@ -2,6 +2,8 @@
 
 #include <list>
 #include <Ship.hpp>
+#include <Event.hpp>
+#include <FieldsChanges.hpp>
 
 namespace bs
 {
@@ -29,7 +31,7 @@ namespace bs
 
         void hit(Vector2i position);
 
-        Battlefield(TileState **field);
-        Battlefield(std::list<Ship> ships);
+        Battlefield(TileState **playerField, TileState **enemyField);
+        Battlefield(std::list<Ship> playerShips, std::list<Ship> enemyShips);
     };
 } // namespace battleships
