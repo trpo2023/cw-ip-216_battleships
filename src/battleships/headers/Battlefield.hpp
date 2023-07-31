@@ -24,7 +24,7 @@ namespace bs
             destroy,
             hit
         };
-
+        struct FieldChanges;
         Event<FieldChanges> onFieldChanged;
 
         TileState **getField();
