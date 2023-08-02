@@ -4,34 +4,22 @@
 #include <Ship.hpp>
 #include <Event.hpp>
 #include <FieldsChanges.hpp>
-
+#include <TileState.hpp>
 namespace bs
 {
     class Battlefield
     {
-    public:
-        enum class TileState;
-
     private:
         TileState **field;
 
     public:
-        enum class TileState
-        {
-            empty,
-            ship,
-            miss,
-            destroy,
-            hit
-        };
         struct FieldChanges;
         Event<FieldChanges> onFieldChanged;
 
         TileState **getField();
 
-        void hit(Vector2i position);
+        bool shoot(Vector2i position);
 
-        Battlefield(TileState **playerField, TileState **enemyField);
-        Battlefield(std::list<Ship> playerShips, std::list<Ship> enemyShips);
+        Battlefield();
     };
 } // namespace battleships
