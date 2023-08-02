@@ -10,12 +10,16 @@ namespace bs
 {
     class BattleshipsModel
     {
+    private:
+        Battlefield playerField;
+        Battlefield enemyField;
+
     public:
         Event<bool> onGameOver;
         Event<FieldsChanges> onFieldChanged;
 
-        Battlefield getField(FieldType fieldType);
-        void shoot(Vector2i position);
+        TileState **getTileField(FieldType fieldType);
+        bool shoot(Vector2i position);
 
         BattleshipsModel();
     };

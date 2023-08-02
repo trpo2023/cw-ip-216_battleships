@@ -19,6 +19,7 @@ namespace bs
         TileState **getField();
 
         bool shoot(Vector2i position);
+        void shoot();
 
         Battlefield();
     };
