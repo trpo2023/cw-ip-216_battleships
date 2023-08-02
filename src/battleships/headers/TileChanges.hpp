@@ -7,7 +7,7 @@ namespace bs
 {
     struct TileChanges
     {
-        Battlefield::TileState tileState;
+        TileState tileState;
         Vector2i position;
     };
 } // namespace battleships
