@@ -1,10 +1,12 @@
 #pragma once
-
-enum class TileState
+namespace bs
 {
-    empty,
-    ship,
-    miss,
-    destroy,
-    hit
-};
+    enum class TileState
+    {
+        empty,
+        ship,
+        miss,
+        destroy,
+        hit
+    };
+}
