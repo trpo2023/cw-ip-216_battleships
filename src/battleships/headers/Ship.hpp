@@ -4,25 +4,15 @@
 
 namespace bs
 {
-    class Ship
+    struct Ship
     {
-    private:
-        int _length;
-        bool _isHorizontal;
+        int length;
+        bool isHorizontal;
+        Vector2i startPosition;
 
-        Vector2i _startPosition;
-        Vector2i _endPosition;
-
-    public:
         Ship(Vector2i startPosition, int length, bool isHorizontal)
-            : _startPosition(startPosition),
-              _length(length),
-              _isHorizontal(isHorizontal) {}
-
-        Vector2i getPosition();
-        Vector2i getEndPosition();
-
-        int isHorizontal();
-        int getLength();
+            : startPosition(startPosition),
+              length(length),
+              isHorizontal(isHorizontal) {}
     };
 } // namespace battleships
