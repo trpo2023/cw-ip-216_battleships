@@ -7,13 +7,14 @@
 #include <TileState.hpp>
 namespace bs
 {
+    struct FieldChanges;
+
     class Battlefield
     {
     private:
         TileState **field;
 
     public:
-        struct FieldChanges;
         Event<FieldChanges> onFieldChanged;
 
         TileState **getField();
