@@ -22,8 +22,10 @@ namespace bs
         }
         void invoke(T data)
         {
-            std::for_each(listeners.begin(), listeners.end(), [&]()
-                          { this(data); });
+            for (auto &item : listeners)
+            {
+                item(data);
+            }
         }
     };
 
