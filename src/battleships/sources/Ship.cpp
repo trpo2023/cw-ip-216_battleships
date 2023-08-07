@@ -24,5 +24,6 @@ namespace bs
             endPosition.x += length;
         else
             endPosition.y += length;
+        return endPosition;
     }
 } // namespace bs

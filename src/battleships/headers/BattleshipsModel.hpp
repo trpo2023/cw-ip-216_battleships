@@ -11,8 +11,8 @@ namespace bs
     class BattleshipsModel
     {
     private:
-        Battlefield playerField;
-        Battlefield enemyField;
+        Battlefield *playerField;
+        Battlefield *enemyField;
 
     public:
         Event<bool> onGameOver;
@@ -22,5 +22,6 @@ namespace bs
         bool shoot(Vector2i position);
 
         BattleshipsModel();
+        ~BattleshipsModel();
     };
 }
