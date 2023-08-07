@@ -14,6 +14,43 @@ namespace bs
         }
     }
 
+    bool Battlefield::checkShipArea(Rectangle2i area)
+    {
+        for (auto &ship : ships)
+        {
+            if (area.getCollision(ship.startPosition))
+                return false;
+            if (area.getCollision(ship.getEndPosition()))
+                return false;
+        }
+
+        return true;
+    }
+
+    bool Battlefield::checkShipOutOfBorders(Ship ship)
+    {
+        if (ship.startPosition.x > 9 || ship.startPosition.y > 9)
+            return false;
+        if (ship.startPosition.x < 0 || ship.startPosition.y < 0)
+            return false;
+
+        if (ship.getEndPosition().x > 9 || ship.getEndPosition().y > 9)
+            return false;
+        if (ship.getEndPosition().x < 0 || ship.getEndPosition().y < 0)
+            return false;
+
+        return true;
+    }
+
+    bool Battlefield::checkShipPlace(Ship ship)
+    {
+        if (!checkShipOutOfBorders(ship))
+            return false;
+        if (!checkShipArea(ship.getAreaRectangle()))
+            return false;
+        return true;
+    }
+
     bool Battlefield::tryPlaceShip(Ship ship)
     {
         if (!checkShipPlace(ship))
