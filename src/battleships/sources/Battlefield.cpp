@@ -13,6 +13,23 @@ namespace bs
     {
     }
 
+    void Battlefield::placeShip(int size)
+    {
+        int shipsSize = size;
+        Vector2i startPlacePosition = Vector2i(rand() % 10, rand() % 10);
+
+        Ship currentShip = Ship(startPlacePosition, shipsSize, rand() % 2);
+        while (true)
+        {
+            if (tryPlaceShip(currentShip))
+                break;
+            currentShip.isHorizontal = !currentShip.isHorizontal;
+            if (tryPlaceShip(currentShip))
+                break;
+            currentShip.startPosition.makeOffset(1, 10);
+        }
+    }
+
     TileState **Battlefield::getField()
     {
     }
