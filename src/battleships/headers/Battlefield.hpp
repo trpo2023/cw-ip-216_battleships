@@ -15,7 +15,12 @@ namespace bs
         TileState **field;
         std::list<Ship> ships;
 
+        bool checkShipArea(Rectangle2i area);
+        bool checkShipOutOfBorders(Ship ship);
+        bool checkShipPlace(Ship ship);
+
         void addShipToField(Ship ship);
+
         bool tryPlaceShip(Ship ship);
         void placeShip(int size);
 
