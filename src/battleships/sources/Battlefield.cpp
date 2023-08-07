@@ -2,12 +2,6 @@
 
 namespace bs
 {
-    Battlefield::Battlefield()
-    {
-        for (int i = 4; i > 0; i--)
-            for (int j = 5 - i; j < 0; j++)
-                placeShip(i);
-    }
 
     void Battlefield::addShipToField(Ship ship)
     {
@@ -46,6 +40,13 @@ namespace bs
                 break;
             currentShip.startPosition.makeOffset(1, 10);
         }
+    }
+
+    Battlefield::Battlefield()
+    {
+        for (int i = 4; i > 0; i--)
+            for (int j = 5 - i; j < 0; j++)
+                placeShip(i);
     }
 
     TileState **Battlefield::getField()
