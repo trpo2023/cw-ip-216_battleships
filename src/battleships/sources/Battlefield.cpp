@@ -9,6 +9,17 @@ namespace bs
                 placeShip(i);
     }
 
+    void Battlefield::addShipToField(Ship ship)
+    {
+        for (int i = 0; i < ship.length; i++)
+        {
+            if (ship.isHorizontal)
+                field[ship.startPosition.x + i][ship.startPosition.y] = TileState::ship;
+            else
+                field[ship.startPosition.x][ship.startPosition.y + i] = TileState::ship;
+        }
+    }
+
     bool Battlefield::tryPlaceShip(Ship ship)
     {
         if (!checkShipPlace(ship))
