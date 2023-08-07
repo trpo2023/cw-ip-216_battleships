@@ -5,35 +5,41 @@ namespace bs
 {
     BattleshipsModel::BattleshipsModel()
     {
-        this->playerField = Battlefield();
-        this->enemyField = Battlefield();
+        playerField = new Battlefield;
+        enemyField = new Battlefield;
 
-        this->playerField.onFieldChanged.addListener([&](FieldChanges fc)
-                                                     {
+        playerField->onFieldChanged.addListener([&](FieldChanges fc)
+                                                {
             FieldsChanges fdc;
             fdc.isPlayerField = true;
             fdc.changes = fc;
-            this->onFieldChanged.invoke(fdc); });
-        this->enemyField.onFieldChanged.addListener([&](FieldChanges fc)
-                                                    {
+            onFieldChanged.invoke(fdc); });
+        enemyField->onFieldChanged.addListener([&](FieldChanges fc)
+                                               {
             FieldsChanges fdc;
             fdc.isPlayerField = false;
             fdc.changes = fc;
-            this->onFieldChanged.invoke(fdc); });
+            onFieldChanged.invoke(fdc); });
     }
 
     TileState **BattleshipsModel::getTileField(FieldType fieldType)
     {
         return (fieldType == FieldType::Player)
-                   ? this->playerField.getField()
-                   : this->enemyField.getField();
+                   ? playerField->getField()
+                   : enemyField->getField();
     }
 
     bool BattleshipsModel::shoot(Vector2i position)
     {
-        if (enemyField.shoot(position))
+        if (enemyField->shoot(position))
             return false;
-        this->playerField.shoot();
+        playerField->shoot();
         return true;
+    }
+
+    BattleshipsModel::~BattleshipsModel()
+    {
+        delete playerField;
+        delete enemyField;
     }
 } // namespace bs
