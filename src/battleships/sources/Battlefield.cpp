@@ -11,6 +11,13 @@ namespace bs
 
     bool Battlefield::tryPlaceShip(Ship ship)
     {
+        if (!checkShipPlace(ship))
+            return false;
+        else
+        {
+            ships.push_back(ship);
+            addShipToField(ship);
+        }
     }
 
     void Battlefield::placeShip(int size)
