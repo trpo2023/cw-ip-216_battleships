@@ -59,6 +59,7 @@ namespace bs
         {
             ships.push_back(ship);
             addShipToField(ship);
+            return true;
         }
     }
 
@@ -81,8 +82,17 @@ namespace bs
 
     Battlefield::Battlefield()
     {
+        field = new TileState *[10];
+        for (int i = 0; i < 10; i++)
+        {
+            field[i] = new TileState[10];
+            for (int j = 0; j < 10; j++)
+            {
+                field[i][j] = TileState::empty;
+            }
+        }
         for (int i = 4; i > 0; i--)
-            for (int j = 5 - i; j < 0; j++)
+            for (int j = 0; j < 5 - i; j++)
                 placeShip(i);
     }
 
@@ -97,6 +107,13 @@ namespace bs
 
     bool Battlefield::shoot(Vector2i position)
     {
+    }
+
+    Battlefield::~Battlefield()
+    {
+        for (int i = 0; i < 10; i++)
+            delete[] field[i];
+        delete[] field;
     }
 
 } // namespace bs

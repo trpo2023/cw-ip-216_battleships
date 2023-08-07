@@ -33,5 +33,6 @@ namespace bs
         void shoot();
 
         Battlefield();
+        ~Battlefield();
     };
 } // namespace battleships
