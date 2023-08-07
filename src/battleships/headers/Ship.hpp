@@ -1,6 +1,7 @@
 #pragma once
 
 #include <Vector2i.hpp>
+#include <Rectangle2i.hpp>
 
 namespace bs
 {
@@ -9,6 +10,9 @@ namespace bs
         int length;
         bool isHorizontal;
         Vector2i startPosition;
+
+        Vector2i getEndPosition();
+        Rectangle2i getAreaRectangle();
 
         Ship(Vector2i startPosition, int length, bool isHorizontal)
             : startPosition(startPosition),
