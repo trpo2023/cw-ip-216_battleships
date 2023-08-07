@@ -13,6 +13,11 @@ namespace bs
     {
     private:
         TileState **field;
+        std::list<Ship> ships;
+
+        void addShipToField(Ship ship);
+        bool tryPlaceShip(Ship ship);
+        void placeShip(int size);
 
     public:
         Event<FieldChanges> onFieldChanged;
