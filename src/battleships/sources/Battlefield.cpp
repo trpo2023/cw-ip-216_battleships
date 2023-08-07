@@ -4,6 +4,9 @@ namespace bs
 {
     Battlefield::Battlefield()
     {
+        for (int i = 4; i > 0; i--)
+            for (int j = 5 - i; j < 0; j++)
+                placeShip(i);
     }
 
     bool Battlefield::tryPlaceShip(Ship ship)
