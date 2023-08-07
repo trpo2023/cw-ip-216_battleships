@@ -32,6 +32,7 @@ namespace bs
 
     TileState **Battlefield::getField()
     {
+        return field;
     }
 
     void Battlefield::shoot()
