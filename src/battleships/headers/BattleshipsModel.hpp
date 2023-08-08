@@ -13,6 +13,7 @@ namespace bs
     private:
         Battlefield *playerField;
         Battlefield *enemyField;
+        FieldsChanges currentChanges;
 
     public:
         Event<bool> onGameOver;
