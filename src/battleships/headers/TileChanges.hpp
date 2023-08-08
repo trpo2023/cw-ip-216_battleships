@@ -10,5 +10,8 @@ namespace bs
     {
         TileState tileState = TileState::empty;
         Vector2i position;
+
+        TileChanges(TileState tileState, Vector2i position) : tileState(tileState),
+                                                              position(position) {}
     };
 } // namespace battleships
