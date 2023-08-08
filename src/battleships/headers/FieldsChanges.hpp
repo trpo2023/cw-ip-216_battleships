@@ -6,8 +6,8 @@ namespace bs
 {
     struct FieldsChanges
     {
-        bool isPlayerField;
-        FieldChanges changes;
+        FieldChanges player;
+        FieldChanges enemy;
     };
 
 } // namespace battleships
