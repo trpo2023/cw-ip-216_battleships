@@ -21,9 +21,9 @@ namespace bs
     {
         Vector2i endPosition = startPosition;
         if (isHorizontal)
-            endPosition.x += length;
+            endPosition.x += length - 1;
         else
-            endPosition.y += length;
+            endPosition.y += length - 1;
         return endPosition;
     }
 } // namespace bs
