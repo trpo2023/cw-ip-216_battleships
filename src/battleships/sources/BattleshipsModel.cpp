@@ -29,11 +29,11 @@ namespace bs
                    : enemyField->getField();
     }
 
-    bool BattleshipsModel::shoot(Vector2i position)
+    bool BattleshipsModel::tryShoot(Vector2i position)
     {
-        if (enemyField->shoot(position))
+        if (enemyField->tryShoot(position))
             return false;
-        playerField->shoot();
+        playerField->shootRandom();
         return true;
     }
 
