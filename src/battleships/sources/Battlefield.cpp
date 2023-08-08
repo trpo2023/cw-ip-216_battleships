@@ -104,7 +104,7 @@ namespace bs
                field[position.x][position.y] == TileState::ship;
     }
 
-    void Battlefield::shootRandom()
+    void Battlefield::shoot(Vector2i position)
     {
     }
 
@@ -115,6 +115,13 @@ namespace bs
 
         shoot(position);
         return true;
+    }
+
+    void Battlefield::shootRandom()
+    {
+        while (true)
+            if (tryShoot(Vector2i::getRandomVector(10, 10)))
+                break;
     }
 
     Battlefield::~Battlefield()
