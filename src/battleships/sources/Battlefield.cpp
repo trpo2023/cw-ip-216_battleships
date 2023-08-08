@@ -104,8 +104,54 @@ namespace bs
                field[position.x][position.y] == TileState::ship;
     }
 
+    Ship Battlefield::getShipByPosition(Vector2i position)
+    {
+        for (auto &ship : ships)
+            if (ship.getBodyRectangle().getCollision(position))
+                return ship;
+    }
+
+    void Battlefield::destroyShip(Ship ship)
+    {
+        std::set<Vector2i> bodySet = ship.getAreaRectangle().getOutlinePositionsSet();
+        std::set<Vector2i> outlineSet = ship.getAreaRectangle().getOutlinePositionsSet();
+
+        for (auto &position : bodySet)
+        {
+            field[position.x][position.y] = TileState::destroy;
+            currentChanges.tileChanges.push_back(TileChanges(TileState::destroy, position));
+        }
+
+        for (auto &position : bodySet)
+        {
+            field[position.x][position.y] = TileState::miss;
+            currentChanges.tileChanges.push_back(TileChanges(TileState::miss, position));
+        }
+        onFieldChanged.invoke(currentChanges);
+        currentChanges.tileChanges.clear();
+    }
+
+    void Battlefield::hitShip(Vector2i position)
+    {
+        field[position.x][position.y] = TileState::hit;
+        Ship hittedShip = getShipByPosition(position);
+        if (checkShipDestroyed(hittedShip))
+            destroyShip(hittedShip);
+        else
+            currentChanges.tileChanges.push_back(TileChanges(TileState::hit, position));
+    }
+
     void Battlefield::shoot(Vector2i position)
     {
+        if (field[position.x][position.y] == TileState::empty)
+        {
+            field[position.x][position.y] = TileState::miss;
+            currentChanges.tileChanges.push_back(TileChanges(TileState::miss, position));
+        }
+        else
+            hitShip(position);
+        onFieldChanged.invoke(currentChanges);
+        currentChanges.tileChanges.clear();
     }
 
     bool Battlefield::tryShoot(Vector2i position)
