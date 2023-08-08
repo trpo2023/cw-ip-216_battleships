@@ -29,14 +29,11 @@ namespace bs
 
     bool Battlefield::checkShipOutOfBorders(Ship ship)
     {
-        if (ship.startPosition.x > 9 || ship.startPosition.y > 9)
-            return false;
-        if (ship.startPosition.x < 0 || ship.startPosition.y < 0)
-            return false;
+        Rectangle2i fieldRectangle(Vector2i(0, 0), Vector2i(9, 9));
 
-        if (ship.getEndPosition().x > 9 || ship.getEndPosition().y > 9)
+        if (fieldRectangle.getCollision(ship.startPosition))
             return false;
-        if (ship.getEndPosition().x < 0 || ship.getEndPosition().y < 0)
+        if (fieldRectangle.getCollision(ship.getEndPosition()))
             return false;
 
         return true;
