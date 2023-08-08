@@ -101,11 +101,11 @@ namespace bs
         return field;
     }
 
-    void Battlefield::shoot()
+    void Battlefield::shootRandom()
     {
     }
 
-    bool Battlefield::shoot(Vector2i position)
+    bool Battlefield::tryShoot(Vector2i position)
     {
     }
 

@@ -19,7 +19,7 @@ namespace bs
         Event<FieldsChanges> onFieldChanged;
 
         TileState **getTileField(FieldType fieldType);
-        bool shoot(Vector2i position);
+        bool tryShoot(Vector2i position);
 
         BattleshipsModel();
         ~BattleshipsModel();

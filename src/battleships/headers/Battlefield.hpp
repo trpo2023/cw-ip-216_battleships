@@ -29,8 +29,8 @@ namespace bs
 
         TileState **getField();
 
-        bool shoot(Vector2i position);
-        void shoot();
+        bool tryShoot(Vector2i position);
+        void shootRandom();
 
         Battlefield();
         ~Battlefield();
