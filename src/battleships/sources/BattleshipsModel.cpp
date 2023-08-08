@@ -9,17 +9,9 @@ namespace bs
         enemyField = new Battlefield;
 
         playerField->onFieldChanged.addListener([&](FieldChanges fc)
-                                                {
-            FieldsChanges fdc;
-            fdc.isPlayerField = true;
-            fdc.changes = fc;
-            onFieldChanged.invoke(fdc); });
+                                                { this->currentChanges.player = fc; });
         enemyField->onFieldChanged.addListener([&](FieldChanges fc)
-                                               {
-            FieldsChanges fdc;
-            fdc.isPlayerField = false;
-            fdc.changes = fc;
-            onFieldChanged.invoke(fdc); });
+                                               { this->currentChanges.enemy = fc; });
     }
 
     TileState **BattleshipsModel::getTileField(FieldType fieldType)
@@ -34,6 +26,7 @@ namespace bs
         if (enemyField->tryShoot(position))
             return false;
         playerField->shootRandom();
+        onFieldChanged.invoke(currentChanges);
         return true;
     }
 
