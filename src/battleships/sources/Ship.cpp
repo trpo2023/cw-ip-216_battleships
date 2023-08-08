@@ -26,4 +26,9 @@ namespace bs
             endPosition.y += length - 1;
         return endPosition;
     }
+
+    Rectangle2i Ship::getBodyRectangle()
+    {
+        return Rectangle2i(startPosition, getEndPosition());
+    }
 } // namespace bs

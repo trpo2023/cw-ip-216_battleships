@@ -13,6 +13,7 @@ namespace bs
 
         Vector2i getEndPosition();
         Rectangle2i getAreaRectangle();
+        Rectangle2i getBodyRectangle();
 
         Ship(Vector2i startPosition, int length, bool isHorizontal)
             : startPosition(startPosition),
