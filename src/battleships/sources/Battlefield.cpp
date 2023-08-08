@@ -98,6 +98,12 @@ namespace bs
         return field;
     }
 
+    bool Battlefield::checkShootPosition(Vector2i position)
+    {
+        return field[position.x][position.y] == TileState::empty ||
+               field[position.x][position.y] == TileState::ship;
+    }
+
     void Battlefield::shootRandom()
     {
     }
