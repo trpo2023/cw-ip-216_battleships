@@ -31,4 +31,13 @@ namespace bs
     {
         return Rectangle2i(startPosition, getEndPosition());
     }
+
+    std::set<Vector2i> Ship::getBodyPositionsSet()
+    {
+        return Rectangle2i(startPosition, getEndPosition()).getPositionsSet();
+    }
+    std::set<Vector2i> Ship::getAreaOutlinePositionsSet()
+    {
+        return getAreaRectangle().getOutlinePositionsSet();
+    }
 } // namespace bs
