@@ -19,4 +19,9 @@ namespace bs
             y = 0;
         }
     }
+
+    Vector2i Vector2i::getRandomVector(int maxX, int maxY)
+    {
+        return Vector2i(rand() % maxX, rand() % maxY);
+    }
 } // namespace bs
