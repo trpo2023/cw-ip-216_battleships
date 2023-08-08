@@ -25,6 +25,8 @@ namespace bs
         void placeShip(int size);
 
         bool checkShootPosition(Vector2i position);
+        void shoot(Vector2i position);
+
     public:
         Event<FieldChanges> onFieldChanged;
 
