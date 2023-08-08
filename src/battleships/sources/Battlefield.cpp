@@ -110,6 +110,11 @@ namespace bs
 
     bool Battlefield::tryShoot(Vector2i position)
     {
+        if (!checkShootPosition(position))
+            return false;
+
+        shoot(position);
+        return true;
     }
 
     Battlefield::~Battlefield()
