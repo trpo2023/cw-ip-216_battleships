@@ -8,8 +8,8 @@ namespace Battleships.Models;
 public class Battlefield
 {
     private TileState[,] field;
-    private List<Ship> _ships;
-    private List<TileChanges> currentChanges;
+    private List<Ship> _ships = new();
+    private List<TileChanges> currentChanges = new();
 
 
     public delegate void FieldChangedHandler(List<TileChanges> fieldsChanges);
@@ -19,9 +19,9 @@ public class Battlefield
     {
         Rectangle fieldRectangle = new(new Vector2i(0, 0), new Vector2i(9, 9));
 
-        if (fieldRectangle.GetCollision(ship.startPosition))
+        if (!fieldRectangle.GetCollision(ship.startPosition))
             return false;
-        if (fieldRectangle.GetCollision(ship.GetEndPosition()))
+        if (!fieldRectangle.GetCollision(ship.GetEndPosition()))
             return false;
         return true;
     }
