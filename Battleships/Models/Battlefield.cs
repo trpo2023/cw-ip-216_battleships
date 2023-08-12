@@ -103,6 +103,88 @@ public class Battlefield
     }
 
 
+
+    private bool CheckShootPosition(Vector2i position)
+    {
+        return field[position.x, position.y] == TileState.Empty ||
+               field[position.x, position.y] == TileState.Ship;
+    }
+
+    private Ship GetShipByPosition(Vector2i position)
+    {
+        foreach (var ship in _ships)
+            if (ship.GetBodyRectangle().GetCollision(position))
+                return ship;
+        return new Ship();
+    }
+
+    private void DestroyShip(Ship ship)
+    {
+        HashSet<Vector2i> bodySet = ship.GetAreaRectangle().GetOutlinePositionsSet();
+        HashSet<Vector2i> outlineSet = ship.GetAreaRectangle().GetOutlinePositionsSet();
+
+        foreach (var position in bodySet)
+        {
+            field[position.x, position.y] = TileState.Destroy;
+            currentChanges.Add(new TileChanges(TileState.Destroy, position));
+        }
+
+        foreach (var position in outlineSet)
+        {
+            field[position.x, position.y] = TileState.Miss;
+            currentChanges.Add(new TileChanges(TileState.Miss, position));
+        }
+    }
+
+    private bool CheckShipDestroyed(Ship ship)
+    {
+        foreach (var pos in ship.GetBodyPositionsSet())
+            if (field[pos.x, pos.y] == TileState.Ship)
+                return false;
+        return true;
+    }
+
+    private void HitShip(Vector2i position)
+    {
+        field[position.x, position.y] = TileState.Hit;
+        Ship hittedShip = GetShipByPosition(position);
+        if (CheckShipDestroyed(hittedShip))
+            DestroyShip(hittedShip);
+        else
+            currentChanges.Add(new TileChanges(TileState.Hit, position));
+    }
+
+    private void Shoot(Vector2i position)
+    {
+        if (field[position.x, position.y] == TileState.Empty)
+        {
+            field[position.x, position.y] = TileState.Miss;
+            currentChanges.Add(new TileChanges(TileState.Miss, position));
+        }
+        else
+            HitShip(position);
+        OnFieldChanged.Invoke(currentChanges);
+        currentChanges.Clear();
+    }
+
+
+    public bool TryShoot(Vector2i position)
+    {
+        if (!CheckShootPosition(position))
+            return false;
+
+        Shoot(position);
+        return true;
+    }
+
+
+    public void ShootRandom()
+    {
+        while (true)
+            if (TryShoot(Vector2i.GetRandomVector(10, 10)))
+                break;
+    }
+
     public TileState[,] GetField()
     {
         return field;
