@@ -19,11 +19,11 @@ public struct Rectangle
 
     public readonly int GetWidth()
     {
-        return startPosition.x - endPosition.x - 1;
+        return endPosition.x - startPosition.x + 1;
     }
     public readonly int GetHeight()
     {
-        return startPosition.y - endPosition.y - 1;
+        return endPosition.y - startPosition.y + 1;
     }
 
     public readonly HashSet<Vector2i> GetPositionsSet()
