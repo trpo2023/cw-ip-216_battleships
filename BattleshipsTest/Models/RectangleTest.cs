@@ -69,7 +69,30 @@ public class RectangleTest
     [TestMethod]
     public void GetOutlinePositionsSetTest()
     {
+        // #*###
+        // #####
+        // #####
+        // ####*
+        var rect = new Rectangle(new Vector2i(1, 0), new Vector2i(4, 3));
+        var actualSet = rect.GetOutlinePositionsSet();
+        HashSet<Vector2i> outlineset = new() {
+            new Vector2i(1,0),
+            new Vector2i(2,0),
+            new Vector2i(3,0),
+            new Vector2i(4,0),
 
+            new Vector2i(1,1),
+            new Vector2i(1,2),
+            new Vector2i(4,1),
+            new Vector2i(4,2),
+
+            new Vector2i(1,3),
+            new Vector2i(2,3),
+            new Vector2i(3,3),
+            new Vector2i(4,3),
+        };
+
+        Assert.IsTrue(actualSet.SetEquals(outlineset));
     }
 
 }
