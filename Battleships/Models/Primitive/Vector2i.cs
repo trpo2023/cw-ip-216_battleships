@@ -43,4 +43,9 @@ public struct Vector2i
         return new Vector2i(rnd.Next() % maxX, rnd.Next() % maxY);
     }
 
+    public override readonly string ToString()
+    {
+        return $"{x}; {y}";
+    }
+
 }
