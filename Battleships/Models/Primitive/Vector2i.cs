@@ -15,8 +15,8 @@ public struct Vector2i
 
     public Vector2i()
     {
-        this.x = 0;
-        this.y = 0;
+        x = 0;
+        y = 0;
     }
 
     public void MakeOffset(int squareSize)
