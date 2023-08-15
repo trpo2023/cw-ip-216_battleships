@@ -6,4 +6,10 @@ public struct FieldsChanges
 {
     public List<TileChanges> playerChanges;
     public List<TileChanges> enemyChanges;
+
+    public void Clear()
+    {
+        playerChanges.Clear();
+        enemyChanges.Clear();
+    }
 }
