@@ -30,8 +30,12 @@ public struct Rectangle
     {
         HashSet<Vector2i> result = new();
         for (int i = 0; i < GetWidth(); i++)
+        {
             for (int j = 0; j < GetHeight(); j++)
+            {
                 result.Add(new Vector2i(startPosition.x + i, startPosition.y + j));
+            }
+        }
         return result;
     }
 
@@ -41,8 +45,8 @@ public struct Rectangle
         HashSet<Vector2i> toDelete = new();
         foreach (var item in result)
         {
-            if (item.x == startPosition.x || item.x == endPosition.x ||
-                item.y == startPosition.y || item.y == endPosition.y)
+            if (item.x != startPosition.x && item.x != endPosition.x &&
+                item.y != startPosition.y && item.y != endPosition.y)
                 toDelete.Add(item);
         }
         foreach (var item in toDelete)
