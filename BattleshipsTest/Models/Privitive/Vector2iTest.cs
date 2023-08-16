@@ -1,6 +1,6 @@
 using Battleships.Models.Primitive;
 
-namespace BattleshipsTest;
+namespace BattleshipsTest.Model.Primitive;
 
 [TestClass]
 public class Vector2iTest
