@@ -3,32 +3,44 @@ using Battleships.Models.Primitive;
 
 namespace Battleships.Models;
 
-internal struct Ship
+public struct Ship
 {
     public int lenght;
     public Vector2i startPosition;
-    public bool isHorizontal;
+    public Vector2i endPosition;
 
-    public Ship(Vector2i startPosition, int lenght, bool isHorizontal)
+    private Orientation _orientation = Orientation.Horizontal;
+    public Orientation CurrentOrientation
     {
-        this.lenght = lenght;
-        this.startPosition = startPosition;
-        this.isHorizontal = isHorizontal;
+        readonly get => _orientation;
+        set
+        {
+            _orientation = value;
+
+            endPosition = startPosition;
+            switch (value)
+            {
+                case Orientation.Horizontal:
+                    endPosition.x += lenght - 1;
+                    break;
+                case Orientation.Vertical:
+                    endPosition.y += lenght - 1;
+                    break;
+            }
+        }
     }
 
-    public Vector2i GetEndPosition()
+    public enum Orientation
     {
-        var result = startPosition;
-        if (isHorizontal)
-        {
-            result.x += lenght - 1;
-        }
-        else
-        {
-            result.y += lenght - 1;
-        }
+        Vertical,
+        Horizontal
+    }
 
-        return result;
+    public Ship(Vector2i startPosition, int lenght, Orientation direction)
+    {
+        this.lenght = lenght;
+        this.startPosition = this.endPosition = startPosition;
+        this.CurrentOrientation = direction;
     }
 
     public Rectangle GetAreaRectangle()
@@ -39,24 +51,36 @@ internal struct Ship
         result.startPosition.x -= 1;
         result.startPosition.y -= 1;
 
-        result.endPosition = GetEndPosition();
+        result.endPosition = endPosition;
         result.endPosition.x += 1;
         result.endPosition.y += 1;
 
         return result;
     }
+
     public Rectangle GetBodyRectangle()
     {
-        return new Rectangle(startPosition, GetEndPosition());
+        return new Rectangle(startPosition, endPosition);
     }
 
     public HashSet<Vector2i> GetBodyPositionsSet()
     {
-        return new Rectangle(startPosition, GetEndPosition()).GetPositionsSet();
-    }
-    public HashSet<Vector2i> GetAreaOutlinePositionsSet()
-    {
-        return GetAreaRectangle().GetOutlinePositionsSet();
+        return new Rectangle(startPosition, endPosition).GetPositionsSet();
     }
 
+    public HashSet<Vector2i> GetAreaOutlinePositionsSet()
+    {
+        var result = GetAreaRectangle().GetOutlinePositionsSet();
+        HashSet<Vector2i> toDelete = new();
+        foreach (var item in result)
+        {
+            if (item.x is >= 0 and <= 9 || item.y is >= 0 and <= 9)
+                toDelete.Add(item);
+        }
+        foreach (var item in toDelete)
+        {
+            result.Remove(item);
+        }
+        return result;
+    }
 }
