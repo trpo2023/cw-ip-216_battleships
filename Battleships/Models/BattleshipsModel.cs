@@ -44,7 +44,7 @@ public class BattleshipsModel
 
     public bool TryShoot(Vector2i position)
     {
-        if (_enemyField.TryShoot(position))
+        if (!_enemyField.TryShoot(position))
             return false;
         _playerField.ShootRandom();
         OnFieldsChanged.Invoke(_currentChanges);

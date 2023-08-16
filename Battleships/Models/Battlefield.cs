@@ -11,7 +11,6 @@ public class Battlefield
     private List<Ship> _ships = new();
     private List<TileChanges> currentChanges = new();
 
-
     public delegate void FieldChangedHandler(List<TileChanges> fieldsChanges);
     public event FieldChangedHandler OnFieldChanged;
 
@@ -21,7 +20,7 @@ public class Battlefield
 
         if (!fieldRectangle.GetCollision(ship.startPosition))
             return false;
-        if (!fieldRectangle.GetCollision(ship.GetEndPosition()))
+        if (!fieldRectangle.GetCollision(ship.endPosition))
             return false;
         return true;
     }
@@ -32,7 +31,7 @@ public class Battlefield
         {
             if (area.GetCollision(ship.startPosition))
                 return false;
-            if (area.GetCollision(ship.GetEndPosition()))
+            if (area.GetCollision(ship.endPosition))
                 return false;
         }
 
@@ -52,7 +51,7 @@ public class Battlefield
     {
         for (int i = 0; i < ship.lenght; i++)
         {
-            if (ship.isHorizontal)
+            if (ship.CurrentOrientation == Ship.Orientation.Horizontal)
                 field[ship.startPosition.x + i, ship.startPosition.y] = TileState.Ship;
             else
                 field[ship.startPosition.x, ship.startPosition.y + i] = TileState.Ship;
@@ -77,13 +76,21 @@ public class Battlefield
         Random rnd = new();
         Vector2i startPlacePosition = new(rnd.Next() % 10, rnd.Next() % 10);
 
-        Ship currentShip = new(startPlacePosition, shipsSize, rnd.Next() % 2 > 0);
+        var direction =
+            (rnd.Next() % 2 == 0) ? Ship.Orientation.Horizontal : Ship.Orientation.Vertical;
+
+        Ship currentShip = new(startPlacePosition, shipsSize, direction);
 
         while (true)
         {
             if (TryPlaceShip(currentShip))
                 break;
-            currentShip.isHorizontal = !currentShip.isHorizontal;
+
+            currentShip.CurrentOrientation =
+                currentShip.CurrentOrientation == Ship.Orientation.Horizontal
+                    ? Ship.Orientation.Vertical
+                    : Ship.Orientation.Horizontal;
+
             if (TryPlaceShip(currentShip))
                 break;
             currentShip.startPosition.MakeOffset(10);
@@ -102,12 +109,10 @@ public class Battlefield
                 PlaceShip(i);
     }
 
-
-
     private bool CheckShootPosition(Vector2i position)
     {
-        return field[position.x, position.y] == TileState.Empty ||
-               field[position.x, position.y] == TileState.Ship;
+        return field[position.x, position.y] == TileState.Empty
+            || field[position.x, position.y] == TileState.Ship;
     }
 
     private Ship GetShipByPosition(Vector2i position)
@@ -120,8 +125,8 @@ public class Battlefield
 
     private void DestroyShip(Ship ship)
     {
-        HashSet<Vector2i> bodySet = ship.GetAreaRectangle().GetOutlinePositionsSet();
-        HashSet<Vector2i> outlineSet = ship.GetAreaRectangle().GetOutlinePositionsSet();
+        HashSet<Vector2i> outlineSet = ship.GetAreaOutlinePositionsSet();
+        HashSet<Vector2i> bodySet = ship.GetBodyPositionsSet();
 
         foreach (var position in bodySet)
         {
@@ -167,7 +172,6 @@ public class Battlefield
         currentChanges.Clear();
     }
 
-
     public bool TryShoot(Vector2i position)
     {
         if (!CheckShootPosition(position))
@@ -176,7 +180,6 @@ public class Battlefield
         Shoot(position);
         return true;
     }
-
 
     public void ShootRandom()
     {
