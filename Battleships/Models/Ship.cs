@@ -74,7 +74,7 @@ public struct Ship
         HashSet<Vector2i> toDelete = new();
         foreach (var item in result)
         {
-            if (item.x is >= 0 and <= 9 || item.y is >= 0 and <= 9)
+            if (item.x < 0 || item.x > 9 || item.y < 0 || item.y > 9)
                 toDelete.Add(item);
         }
         foreach (var item in toDelete)
