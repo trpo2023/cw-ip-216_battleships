@@ -48,4 +48,18 @@ public struct Vector2i
         return $"{x}; {y}";
     }
 
+    private static bool Compare(Vector2i left, Vector2i right)
+    {
+        return (left.x == right.x) && (left.y == right.y);
+    }
+
+    public static bool operator !=(Vector2i left, Vector2i right)
+    {
+        return !Compare(left, right);
+    }
+
+    public static bool operator ==(Vector2i left, Vector2i right)
+    {
+        return Compare(left, right);
+    }
 }
