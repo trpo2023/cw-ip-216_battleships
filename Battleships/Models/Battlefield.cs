@@ -183,9 +183,15 @@ public class Battlefield
 
     public void ShootRandom()
     {
-        while (true)
-            if (TryShoot(Vector2i.GetRandomVector(10, 10)))
+        Vector2i startShootPosition = Vector2i.GetRandomVector(10, 10);
+        Vector2i currentShootPosition = startShootPosition;
+        currentShootPosition.MakeOffset(10);
+        while (startShootPosition != currentShootPosition)
+        {
+            if (TryShoot(currentShootPosition))
                 break;
+            currentShootPosition.MakeOffset(10);
+        }
     }
 
     public TileState[,] GetField()
