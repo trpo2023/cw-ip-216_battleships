@@ -7,18 +7,14 @@ public struct Ship
 {
     public int lenght;
     public Vector2i startPosition;
-    public Vector2i endPosition;
-
-    private Orientation _orientation = Orientation.Horizontal;
-    public Orientation CurrentOrientation
+    public Orientation orientation = Orientation.Horizontal;
+    public readonly Vector2i EndPosition
     {
-        readonly get => _orientation;
-        set
+        get
         {
-            _orientation = value;
+            var endPosition = startPosition;
 
-            endPosition = startPosition;
-            switch (value)
+            switch (orientation)
             {
                 case Orientation.Horizontal:
                     endPosition.x += lenght - 1;
@@ -27,6 +23,7 @@ public struct Ship
                     endPosition.y += lenght - 1;
                     break;
             }
+            return endPosition;
         }
     }
 
@@ -36,11 +33,11 @@ public struct Ship
         Horizontal
     }
 
-    public Ship(Vector2i startPosition, int lenght, Orientation direction)
+    public Ship(Vector2i startPosition, int lenght, Orientation orientation)
     {
         this.lenght = lenght;
-        this.startPosition = this.endPosition = startPosition;
-        this.CurrentOrientation = direction;
+        this.startPosition = startPosition;
+        this.orientation = orientation;
     }
 
     public Rectangle GetAreaRectangle()
@@ -51,7 +48,7 @@ public struct Ship
         result.startPosition.x -= 1;
         result.startPosition.y -= 1;
 
-        result.endPosition = endPosition;
+        result.endPosition = EndPosition;
         result.endPosition.x += 1;
         result.endPosition.y += 1;
 
@@ -60,12 +57,12 @@ public struct Ship
 
     public Rectangle GetBodyRectangle()
     {
-        return new Rectangle(startPosition, endPosition);
+        return new Rectangle(startPosition, EndPosition);
     }
 
     public HashSet<Vector2i> GetBodyPositionsSet()
     {
-        return new Rectangle(startPosition, endPosition).GetPositionsSet();
+        return new Rectangle(startPosition, EndPosition).GetPositionsSet();
     }
 
     public HashSet<Vector2i> GetAreaOutlinePositionsSet()
