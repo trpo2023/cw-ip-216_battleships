@@ -14,6 +14,9 @@ public class Battlefield
     public delegate void FieldChangedHandler(List<TileChanges> fieldsChanges);
     public event FieldChangedHandler OnFieldChanged;
 
+    public delegate void OnGameOverHandler();
+    public event OnGameOverHandler OnGameOver;
+
     private static bool CheckShipOutOfBorders(Ship ship)
     {
         Rectangle fieldRectangle = new(new Vector2i(0, 0), new Vector2i(9, 9));
@@ -159,6 +162,15 @@ public class Battlefield
             currentChanges.Add(new TileChanges(TileState.Hit, position));
     }
 
+    private bool CheckFieldDestroyed()
+    {
+        foreach (var ship in _ships)
+            if (!CheckShipDestroyed(ship))
+                return false;
+
+        return true;
+    }
+
     private void Shoot(Vector2i position)
     {
         if (field[position.x, position.y] == TileState.Empty)
@@ -170,6 +182,8 @@ public class Battlefield
             HitShip(position);
         OnFieldChanged.Invoke(currentChanges);
         currentChanges.Clear();
+        if (CheckFieldDestroyed())
+            OnGameOver.Invoke();
     }
 
     public bool TryShoot(Vector2i position)
