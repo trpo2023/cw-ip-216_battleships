@@ -32,8 +32,8 @@ public class ShoTest
     [TestMethod]
     public void EndPositionTest()
     {
-        Assert.AreEqual(new Vector2i(5, 4), ship1.endPosition);
-        Assert.AreEqual(new Vector2i(1, 8), ship2.endPosition);
+        Assert.AreEqual(new Vector2i(5, 4), ship1.EndPosition);
+        Assert.AreEqual(new Vector2i(1, 8), ship2.EndPosition);
     }
 
     [TestMethod]
