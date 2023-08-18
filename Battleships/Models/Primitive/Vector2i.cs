@@ -48,18 +48,31 @@ public struct Vector2i
         return $"{x}; {y}";
     }
 
-    private static bool Compare(Vector2i left, Vector2i right)
-    {
-        return (left.x == right.x) && (left.y == right.y);
-    }
-
     public static bool operator !=(Vector2i left, Vector2i right)
     {
-        return !Compare(left, right);
+        return !left.Equals(right);
     }
 
     public static bool operator ==(Vector2i left, Vector2i right)
     {
-        return Compare(left, right);
+        return left.Equals(right);
+    }
+
+    public override bool Equals(object obj)
+    {
+        if (obj is Vector2i)
+        {
+            Vector2i c = (Vector2i)obj;
+            return x == c.x && y == c.y;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public override int GetHashCode()
+    {
+        return x.GetHashCode() ^ y.GetHashCode();
     }
 }
