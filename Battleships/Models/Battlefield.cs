@@ -20,7 +20,7 @@ public class Battlefield
 
         if (!fieldRectangle.GetCollision(ship.startPosition))
             return false;
-        if (!fieldRectangle.GetCollision(ship.endPosition))
+        if (!fieldRectangle.GetCollision(ship.EndPosition))
             return false;
         return true;
     }
@@ -31,7 +31,7 @@ public class Battlefield
         {
             if (area.GetCollision(ship.startPosition))
                 return false;
-            if (area.GetCollision(ship.endPosition))
+            if (area.GetCollision(ship.EndPosition))
                 return false;
         }
 
@@ -51,7 +51,7 @@ public class Battlefield
     {
         for (int i = 0; i < ship.lenght; i++)
         {
-            if (ship.CurrentOrientation == Ship.Orientation.Horizontal)
+            if (ship.orientation == Ship.Orientation.Horizontal)
                 field[ship.startPosition.x + i, ship.startPosition.y] = TileState.Ship;
             else
                 field[ship.startPosition.x, ship.startPosition.y + i] = TileState.Ship;
@@ -86,8 +86,8 @@ public class Battlefield
             if (TryPlaceShip(currentShip))
                 break;
 
-            currentShip.CurrentOrientation =
-                currentShip.CurrentOrientation == Ship.Orientation.Horizontal
+            currentShip.orientation =
+                currentShip.orientation == Ship.Orientation.Horizontal
                     ? Ship.Orientation.Vertical
                     : Ship.Orientation.Horizontal;
 
