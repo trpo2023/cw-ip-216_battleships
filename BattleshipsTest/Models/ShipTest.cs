@@ -40,22 +40,22 @@ public class ShoTest
     public void GetAreaRectangleTest()
     {
         var result = ship1.GetAreaRectangle();
-        var expected = new Rectangle(new Vector2i(2, 3), new Vector2i(6, 5));
+        var expected = new IntRectangle(new Vector2i(2, 3), new Vector2i(6, 5));
         Assert.AreEqual(expected, result);
 
         result = ship2.GetAreaRectangle();
-        expected = new Rectangle(new Vector2i(0, 4), new Vector2i(2, 9));
+        expected = new IntRectangle(new Vector2i(0, 4), new Vector2i(2, 9));
         Assert.AreEqual(expected, result);
     }
 
     [TestMethod]
     public void GetBodyRectangleTest()
     {
-        var expected = new Rectangle(new Vector2i(3, 4), new Vector2i(5, 4));
+        var expected = new IntRectangle(new Vector2i(3, 4), new Vector2i(5, 4));
         var result = ship1.GetBodyRectangle();
         Assert.AreEqual(expected, result);
 
-        expected = new Rectangle(new Vector2i(1, 5), new Vector2i(1, 8));
+        expected = new IntRectangle(new Vector2i(1, 5), new Vector2i(1, 8));
         result = ship2.GetBodyRectangle();
         Assert.AreEqual(expected, result);
     }
