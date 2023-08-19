@@ -40,9 +40,9 @@ public struct Ship
         this.orientation = orientation;
     }
 
-    public Rectangle GetAreaRectangle()
+    public IntRectangle GetAreaRectangle()
     {
-        Rectangle result;
+        IntRectangle result;
 
         result.startPosition = startPosition;
         result.startPosition.x -= 1;
@@ -55,14 +55,14 @@ public struct Ship
         return result;
     }
 
-    public Rectangle GetBodyRectangle()
+    public IntRectangle GetBodyRectangle()
     {
-        return new Rectangle(startPosition, EndPosition);
+        return new IntRectangle(startPosition, EndPosition);
     }
 
     public HashSet<Vector2i> GetBodyPositionsSet()
     {
-        return new Rectangle(startPosition, EndPosition).GetPositionsSet();
+        return new IntRectangle(startPosition, EndPosition).GetPositionsSet();
     }
 
     public HashSet<Vector2i> GetAreaOutlinePositionsSet()
