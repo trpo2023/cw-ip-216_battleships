@@ -19,7 +19,7 @@ public class Battlefield
 
     private static bool CheckShipOutOfBorders(Ship ship)
     {
-        Rectangle fieldRectangle = new(new Vector2i(0, 0), new Vector2i(9, 9));
+        IntRectangle fieldRectangle = new(new Vector2i(0, 0), new Vector2i(9, 9));
 
         if (!fieldRectangle.GetCollision(ship.startPosition))
             return false;
@@ -28,7 +28,7 @@ public class Battlefield
         return true;
     }
 
-    private bool CheckShipArea(Rectangle area)
+    private bool CheckShipArea(IntRectangle area)
     {
         foreach (var ship in _ships)
         {
