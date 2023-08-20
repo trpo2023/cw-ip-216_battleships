@@ -2,10 +2,20 @@ namespace Battleships.Foundation;
 
 public enum SpriteName
 {
-    End_background,
-    Game_background,
-    Menu_background,
-    Exit_button,
-    Play_button,
-    Menu_title,
+    EndBackground,
+    GameBackground,
+    MenuBackground,
+    ExitButton,
+    GoHomeButton,
+    PlayAgainButton,
+    PlayButton,
+    EnemyField,
+    PlayerField,
+    LoseTitle,
+    MenuTitle,
+    WinTitle,
+    Ship,
+    ShootDestroy,
+    ShootMiss,
+    ShootShip,
 }
