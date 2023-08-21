@@ -80,11 +80,11 @@ public class MainGame : Game, Navigator
 
     public void StartGame()
     {
-        throw new System.NotImplementedException();
+        _currentScreen = new GameScreen(this);
     }
 
     public void StartEndScreen(bool isPlayerWin)
     {
-        throw new System.NotImplementedException();
+        _currentScreen = new EndMenuScreen(this, isPlayerWin);
     }
 }
