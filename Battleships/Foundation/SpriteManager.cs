@@ -28,6 +28,7 @@ public class SpriteManager
             { SpriteName.ShootDestroy, "Tiles/shoot_destroy" },
             { SpriteName.ShootMiss, "Tiles/shoot_miss" },
             { SpriteName.ShootShip, "Tiles/shoot_ship" },
+            { SpriteName.Empty, "Tiles/empty" },
         };
 
     public void LoadTextures(ContentManager content)

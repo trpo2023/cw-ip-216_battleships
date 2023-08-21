@@ -18,4 +18,5 @@ public enum SpriteName
     ShootDestroy,
     ShootMiss,
     ShootShip,
+    Empty,
 }
