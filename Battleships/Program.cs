@@ -1,2 +1,2 @@
-﻿using var game = new Battleships.MainNavigator();
+﻿using var game = new Battleships.MainGame();
 game.Run();
