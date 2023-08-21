@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Battleships;
 
-public class MainNavigator : Game, Navigator
+public class MainGame : Game, Navigator
 {
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
@@ -16,7 +16,7 @@ public class MainNavigator : Game, Navigator
 
     private bool _clickTrigger = false;
 
-    public MainNavigator()
+    public MainGame()
     {
         _graphics = new GraphicsDeviceManager(this)
         {
