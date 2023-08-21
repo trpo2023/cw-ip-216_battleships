@@ -24,7 +24,7 @@ public class MainMenuScreen : Screen
         _events.Add(
             new ScreenEvent(
                 new Rectangle(275, 175, 650, 150),
-                (Point touchPoint) =>
+                (_) =>
                 {
                     _navigator.StartGame();
                 }
@@ -33,7 +33,7 @@ public class MainMenuScreen : Screen
         _events.Add(
             new ScreenEvent(
                 new Rectangle(275, 375, 650, 150),
-                (Point touchPoint) =>
+                (_) =>
                 {
                     _navigator.Exit();
                 }
