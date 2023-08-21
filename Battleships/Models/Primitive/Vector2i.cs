@@ -1,4 +1,5 @@
 using System;
+using Microsoft.Xna.Framework;
 
 namespace Battleships.Models.Primitive;
 
@@ -17,6 +18,12 @@ public struct Vector2i
     {
         x = 0;
         y = 0;
+    }
+
+    public Vector2i(Vector2 v)
+    {
+        this.x = (int)v.X;
+        this.y = (int)v.Y;
     }
 
     public void MakeOffset(int squareSize)
