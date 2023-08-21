@@ -180,7 +180,7 @@ public class Battlefield
         }
         else
             HitShip(position);
-        OnFieldChanged.Invoke(currentChanges);
+        OnFieldChanged.Invoke(new(currentChanges));
         currentChanges.Clear();
         if (CheckFieldDestroyed())
             OnGameOver.Invoke();
