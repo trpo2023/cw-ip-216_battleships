@@ -11,6 +11,12 @@ public abstract class Screen
     public List<Sprite> SpriteList => _spriteList;
     public List<ScreenEvent> Events => _events;
 
+    public void Start()
+    {
+        SpritesInit();
+        EventInit();
+    }
+
     protected virtual void SpritesInit() { }
 
     protected virtual void EventInit() { }
@@ -18,7 +24,5 @@ public abstract class Screen
     public Screen(Navigator navigator)
     {
         _navigator = navigator;
-        SpritesInit();
-        EventInit();
     }
 }

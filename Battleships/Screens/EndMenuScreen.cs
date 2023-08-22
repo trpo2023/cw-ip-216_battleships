@@ -5,7 +5,7 @@ namespace Battleships.Screens;
 
 public class EndMenuScreen : Screen
 {
-    private bool _isPlayerWin = true;
+    private bool _isPlayerWin;
 
     public EndMenuScreen(Navigator navigator, bool isPlayerWin)
         : base(navigator)
@@ -16,12 +16,12 @@ public class EndMenuScreen : Screen
     protected override void SpritesInit()
     {
         base.SpritesInit();
+        _spriteList.Add(new Sprite(SpriteName.EndBackground, new Vector2(0, 0)));
         if (_isPlayerWin)
             _spriteList.Add(new Sprite(SpriteName.WinTitle, new Vector2(450, 50)));
         else
             _spriteList.Add(new Sprite(SpriteName.LoseTitle, new Vector2(450, 50)));
 
-        _spriteList.Add(new Sprite(SpriteName.EndBackground, new Vector2(0, 0)));
         _spriteList.Add(new Sprite(SpriteName.PlayAgainButton, new Vector2(200, 200)));
         _spriteList.Add(new Sprite(SpriteName.GoHomeButton, new Vector2(750, 200)));
     }
