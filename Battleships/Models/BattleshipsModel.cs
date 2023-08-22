@@ -44,12 +44,19 @@ public class BattleshipsModel
 
     public TileState[,] GetTileField(FieldType fieldType)
     {
-        return fieldType switch
+        if (fieldType == FieldType.Player)
+            return _playerField.GetField();
+        else
         {
-            FieldType.Player => _playerField.GetField(),
-            FieldType.Enemy => _enemyField.GetField(),
-            _ => null,
-        };
+            TileState[,] field = new TileState[10, 10];
+            for (int i = 0; i < 10; i++)
+                for (int j = 0; j < 10; j++)
+                    if (_enemyField.GetField()[i, j] == TileState.Ship)
+                        field[i, j] = TileState.Empty;
+                    else
+                        field[i, j] = _enemyField.GetField()[i, j];
+            return field;
+        }
     }
 
     public bool TryShoot(Vector2i position)
