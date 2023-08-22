@@ -30,7 +30,7 @@ public class MainGame : Game, Navigator
     protected override void Initialize()
     {
         // TODO: Add your initialization logic here
-        _currentScreen = new MainMenuScreen(this);
+        StartEndScreen(false);
         base.Initialize();
     }
 
@@ -76,15 +76,18 @@ public class MainGame : Game, Navigator
     public void StartMainMenu()
     {
         _currentScreen = new MainMenuScreen(this);
+        _currentScreen.Start();
     }
 
     public void StartGame()
     {
         _currentScreen = new GameScreen(this);
+        _currentScreen.Start();
     }
 
     public void StartEndScreen(bool isPlayerWin)
     {
         _currentScreen = new EndMenuScreen(this, isPlayerWin);
+        _currentScreen.Start();
     }
 }
