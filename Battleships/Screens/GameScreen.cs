@@ -83,7 +83,6 @@ public class GameScreen : Screen
         };
         _model.OnFieldsChanged += (FieldsChanges fc) =>
         {
-            Console.WriteLine("Field changed");
             foreach (var change in fc.playerChanges)
                 _playerFieldSprites[change.position.x, change.position.y].name =
                     GetSpriteNameByTileState(change.tileState);
@@ -99,15 +98,6 @@ public class GameScreen : Screen
                 {
                     Vector2 fieldPos = GetFieldPos(point.ToVector2(), FieldType.Enemy);
                     _model.TryShoot(new Vector2i(fieldPos));
-                }
-            )
-        );
-        _events.Add(
-            new ScreenEvent(
-                new Rectangle(50, 50, 500, 500),
-                (Point point) =>
-                {
-                    Console.WriteLine("player field");
                 }
             )
         );

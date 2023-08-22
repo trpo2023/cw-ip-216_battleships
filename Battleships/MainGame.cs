@@ -29,8 +29,7 @@ public class MainGame : Game, Navigator
 
     protected override void Initialize()
     {
-        // TODO: Add your initialization logic here
-        StartEndScreen(false);
+        StartMainMenu();
         base.Initialize();
     }
 
@@ -38,7 +37,6 @@ public class MainGame : Game, Navigator
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
         _spriteManager.LoadTextures(Content);
-        // TODO: use this.Content to load your game content here
     }
 
     protected override void Update(GameTime gameTime)
