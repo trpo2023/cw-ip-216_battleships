@@ -9,13 +9,17 @@ public class Battlefield
 {
     private TileState[,] field;
     private List<Ship> _ships = new();
-    private List<TileChanges> currentChanges = new();
 
     public delegate void FieldChangedHandler(List<TileChanges> fieldsChanges);
     public event FieldChangedHandler OnFieldChanged;
 
     public delegate void OnGameOverHandler();
     public event OnGameOverHandler OnGameOver;
+
+    private void TriggerChanges(TileChanges changes)
+    {
+        OnFieldChanged.Invoke(new List<TileChanges> { changes });
+    }
 
     private static bool CheckShipOutOfBorders(Ship ship)
     {
@@ -134,13 +138,13 @@ public class Battlefield
         foreach (var position in bodySet)
         {
             field[position.x, position.y] = TileState.Destroy;
-            currentChanges.Add(new TileChanges(TileState.Destroy, position));
+            TriggerChanges(new TileChanges(TileState.Destroy, position));
         }
 
         foreach (var position in outlineSet)
         {
             field[position.x, position.y] = TileState.Miss;
-            currentChanges.Add(new TileChanges(TileState.Miss, position));
+            TriggerChanges(new TileChanges(TileState.Miss, position));
         }
     }
 
@@ -159,7 +163,7 @@ public class Battlefield
         if (CheckShipDestroyed(hittedShip))
             DestroyShip(hittedShip);
         else
-            currentChanges.Add(new TileChanges(TileState.Hit, position));
+            TriggerChanges(new TileChanges(TileState.Hit, position));
     }
 
     private bool CheckFieldDestroyed()
@@ -171,41 +175,47 @@ public class Battlefield
         return true;
     }
 
-    private void Shoot(Vector2i position)
+    private ShootResult Shoot(Vector2i position)
     {
+        Console.WriteLine($"shoot {position}");
+        ShootResult result;
         if (field[position.x, position.y] == TileState.Empty)
         {
+            result = ShootResult.Miss;
             field[position.x, position.y] = TileState.Miss;
-            currentChanges.Add(new TileChanges(TileState.Miss, position));
+            TriggerChanges(new TileChanges(TileState.Miss, position));
         }
         else
+        {
+            result = ShootResult.Hit;
             HitShip(position);
-        OnFieldChanged.Invoke(new(currentChanges));
-        currentChanges.Clear();
+        }
         if (CheckFieldDestroyed())
             OnGameOver.Invoke();
+        return result;
     }
 
-    public bool TryShoot(Vector2i position)
+    public ShootResult TryShoot(Vector2i position)
     {
         if (!CheckShootPosition(position))
-            return false;
+            return ShootResult.None;
 
-        Shoot(position);
-        return true;
+        return Shoot(position);
     }
 
-    public void ShootRandom()
+    public ShootResult ShootRandom()
     {
         Vector2i startShootPosition = Vector2i.GetRandomVector(10, 10);
         Vector2i currentShootPosition = startShootPosition;
         currentShootPosition.MakeOffset(10);
         while (startShootPosition != currentShootPosition)
         {
-            if (TryShoot(currentShootPosition))
-                break;
+            ShootResult result = TryShoot(currentShootPosition);
+            if (result != ShootResult.None)
+                return result;
             currentShootPosition.MakeOffset(10);
         }
+        return ShootResult.None;
     }
 
     public TileState[,] GetField()

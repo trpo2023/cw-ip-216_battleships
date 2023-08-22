@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
-
+using System.Data;
+using System.Threading;
 using Battleships.Models.Changes;
 using Battleships.Models.Primitive;
 
@@ -11,19 +13,35 @@ public class BattleshipsModel
     private Battlefield _enemyField = new();
     private bool _gameOver = false;
 
-    private FieldsChanges _currentChanges;
-
     public delegate void GameOverHandler(FieldType fieldType);
     public event GameOverHandler OnGameOver;
 
     public delegate void FieldsChangedHandler(FieldsChanges fieldsChanges);
     public event FieldsChangedHandler OnFieldsChanged;
 
+    // return true when need additional player turn
+    private bool PlayerShoot(Vector2i position)
+    {
+        if (_enemyField.TryShoot(position) == ShootResult.Miss)
+            return false;
+        else
+            return true;
+    }
+
+    // return true when need additional enemy turn
+    private bool EnemyShoot()
+    {
+        if (_playerField.ShootRandom() == ShootResult.Miss)
+            return false;
+        else
+            return true;
+    }
+
     public BattleshipsModel()
     {
         _playerField.OnFieldChanged += (List<TileChanges> changes) =>
         {
-            _currentChanges.playerChanges = changes;
+            OnFieldsChanged.Invoke(new FieldsChanges() { playerChanges = changes });
         };
         _playerField.OnGameOver += () =>
         {
@@ -33,7 +51,7 @@ public class BattleshipsModel
 
         _enemyField.OnFieldChanged += (List<TileChanges> changes) =>
         {
-            _currentChanges.enemyChanges = changes;
+            OnFieldsChanged.Invoke(new FieldsChanges() { enemyChanges = changes });
         };
         _enemyField.OnGameOver += () =>
         {
@@ -59,17 +77,25 @@ public class BattleshipsModel
         }
     }
 
-    public bool TryShoot(Vector2i position)
+    public void TryShoot(Vector2i position)
     {
         if (_gameOver)
-            return false;
-        if (!_enemyField.TryShoot(position))
-            return false;
+            return;
+
+        Console.WriteLine("Player");
+        if (PlayerShoot(position))
+        {
+            return;
+        }
 
         if (_gameOver)
-            return false;
-        _playerField.ShootRandom();
-        OnFieldsChanged.Invoke(_currentChanges);
-        return true;
+            return;
+        Console.WriteLine("Enemy");
+        while (true)
+        {
+            bool needTurn = EnemyShoot();
+            if (!needTurn)
+                break;
+        }
     }
 }
